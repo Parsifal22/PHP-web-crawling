@@ -1,0 +1,36 @@
+# Log files
+*.log
+
+# Cache files
+*.cache
+
+# Vendor dependencies
+/vendor/
+
+# Composer files
+composer.phar
+composer.lock
+
+# PHPStorm files
+/.idea/
+
+# NetBeans files
+/nbproject/
+
+# Eclipse files
+/.metadata/
+/bin/
+/tmp/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Other files
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
