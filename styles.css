@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#results-container {
+    margin-top: 20px;
+}
+
+#graph-container {
+    width: 50%;
+    float: left;
+}
+
+#categories-table {
+    width: 50%;
+    float: right;
+}
+
+#categories-tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#realtime-crawling-container {
+    clear: both;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}

@@ -34,3 +34,6 @@ Desktop.ini
 *.swp
 *~.nib
 local.properties
+
+# Visual Studio
+ /.vscode/

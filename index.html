@@ -3,36 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-commerce Scraper Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        #dashboard {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .site {
-            margin: 20px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            width: 300px;
-        }
-        .product {
-            margin-bottom: 20px;
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        .product:last-child {
-            border-bottom: none;
-        }
-    </style>
+    <title>Scraping Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>E-commerce Scraper Dashboard</h1>
-    <div id="dashboard"></div>
+    
+    <div id="header">
+        <h1>Scraping Dashboard</h1>
+        <button id="print-all-products-btn">Print all products</button>
+        <button id="print-categories-btn">Print categories</button>
+    </div>
+    <div id="results-container">
+        <h2>Results</h2>
+        <div id="graph-container">
+            <!-- Graphs will be rendered here -->
+        </div>
+        <div id="products-table-container"></div>
+        </table>
+        <table id="categories-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody id="categories-tbody">
+                <!-- Categories will be rendered here -->
+            </tbody>
+        </table>
+        <div id="realtime-crawling-container">
+            <!-- Real-time crawling updates will be rendered here -->
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

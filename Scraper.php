@@ -38,6 +38,12 @@ class Scraper {
                 $priceDiv = $xpath->query('.//div/span[@class="price notranslate "]', $product);
                 $price = trim($priceDiv->item(0)->nodeValue);
             }
+
+            if ($price == null){
+                $priceDiv = $xpath->query('.//span[@class="old-price"]', $product);
+                $price = trim($priceDiv->item(0)->nodeValue);
+            }
+
             $price = str_replace(' €', '', $price); // Remove the euro sign
             $price = number_format((float) str_replace('.', '', $price) / 100, 2, '.', ''); // Format the price
 
