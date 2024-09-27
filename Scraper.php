@@ -33,11 +33,18 @@ class Scraper {
             // Get the price and discount price
             $priceDiv = $xpath->query('.//div[@class="c-price h-price--small"]', $product);
             $price = trim($priceDiv->item(0)->nodeValue);
+            
+            if ($price == null){
+                $priceDiv = $xpath->query('.//div/span[@class="price notranslate "]', $product);
+                $price = trim($priceDiv->item(0)->nodeValue);
+            }
             $price = str_replace(' €', '', $price); // Remove the euro sign
             $price = number_format((float) str_replace('.', '', $price) / 100, 2, '.', ''); // Format the price
 
             $discountPriceDiv = $xpath->query('.//span[@class="price notranslate discount-price"]', $product);
+
             $discountPrice= trim($discountPriceDiv->item(0)->nodeValue);
+
             $discountPrice = str_replace(' €', '', $discountPrice); // Remove the euro sign
             $discountPrice = number_format((float) str_replace('.', '', $discountPrice) / 100, 2, '.', ''); // Format the price
 
@@ -55,3 +62,5 @@ class Scraper {
     }
 }
 
+$check = new Scraper("urls.txt");
+$check->extractProduct();
