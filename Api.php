@@ -1,45 +1,31 @@
 <?php
 require_once 'Scraper.php';
 
-// Configuration
-$api_key = 'YOUR_API_KEY';
-$username = 'YOUR_USERNAME';
-$password = 'YOUR_PASSWORD';
+// Load the list of e-commerce website URLs from a text file
+$urls = file('urls.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
-// API endpoint
-$api = new \Slim\App();
+// Create an instance of the Scraper class
+$scraper = new Scraper();
 
-$app->post('/scrape', function ($request, $response) use ($api_key, $username, $password) {
-    // Verify API key
-    $provided_api_key = $request->getHeader('API-KEY');
-    if ($provided_api_key !== $api_key) {
-        return $response->withStatus(401)->withJson(['error' => 'Invalid API key']);
+// Initialize an empty array to store the results
+$results = array();
+
+// Loop through each URL and scrape the homepage
+foreach ($urls as $url) {
+    try {
+        // Create a new instance of the Scraper class for each URL
+        $scraper = new Scraper($url);
+        $products = $scraper->extractProduct();
+        $results[] = array(
+            'url' => $url,
+            'products' => $products
+        );
+    } catch (Exception $e) {
+        // Handle any errors that occur during scraping
+        error_log("Error scraping $url: " . $e->getMessage());
     }
+}
 
-    // Verify user credentials
-    $auth = $request->getHeader('Authorization');
-    if (!$auth) {
-        return $response->withStatus(401)->withJson(['error' => 'Unauthorized']);
-    }
-    list($username_provided, $password_provided) = explode(':', base64_decode(substr($auth, 6)));
-    if ($username_provided !== $username || $password_provided !== $password) {
-        return $response->withStatus(401)->withJson(['error' => 'Invalid credentials']);
-    }
-
-    // Get the URL to scrape from the request body
-    $url = $request->getParam('url');
-    if (!$url) {
-        return $response->withStatus(400)->withJson(['error' => 'URL is required']);
-    }
-
-    // Create a new Scraper instance
-    $scraper = new Scraper($url);
-
-    // Scrape the webpage
-    $products = $scraper->extractProduct();
-
-    // Return the results in JSON format
-    return $response->withJson($products);
-});
-
-$app->run();
+// Return the results in JSON format
+header('Content-Type: application/json');
+echo json_encode($results);

@@ -55,7 +55,3 @@ class Scraper {
     }
 }
 
-
-$scraper = new Scraper("urls.txt");
-$categories = $scraper->extractProduct();
-print_r($categories);
