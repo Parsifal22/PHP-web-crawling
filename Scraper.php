@@ -3,12 +3,12 @@ class Scraper {
     private $url;
     private $html;
 
-    public function __construct($filename) {
-        if (file_exists($filename)) {
-            $this->url = trim(file_get_contents($filename));
+    public function __construct() {
+        if (file_exists("./url.txt")) {
+            $this->url = trim(file_get_contents("./url.txt"));
             $this->html = file_get_contents($this->url);
         } else {
-            throw new Exception("File $filename not found");
+            throw new Exception("File url.txt not found");
         } 
     }
 
@@ -66,7 +66,35 @@ class Scraper {
 
         return $productsArray;
     }
+
+    public function extractCategories() {
+        libxml_use_internal_errors(true);
+        $dom = new DOMDocument();
+        $dom->loadHTML($this->html);
+        libxml_clear_errors();
+    
+        $xpath = new DOMXPath($dom);
+        $products = $xpath->query('//div[contains(@class, "api product-list-item") and @widget]');
+
+        $productsArray = array();
+        
+        foreach ($products as $product) {
+            $href = $xpath->query('.//a[@class="cover-link"]', $product)->item(0)->getAttribute('href');
+            $urlParts = explode('/', $href);
+            $categoryName = $urlParts[4];
+            $title = trim($xpath->query('.//p/a', $product)->item(0)->nodeValue); // Use trim() to remove extra whitespace
+        
+            if ($title && $categoryName) {
+                $productsArray[] = array(
+                    'title' => $title,
+                    'category' => $categoryName
+                );
+            }
+        }
+
+        return $productsArray;
+    }
 }
 
-$check = new Scraper("urls.txt");
+$check = new Scraper();
 $check->extractProduct();

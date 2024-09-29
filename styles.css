@@ -6,24 +6,64 @@ body {
     margin-top: 20px;
 }
 
-#graph-container {
-    width: 50%;
-    float: left;
-}
+#table-container {
+    text-align: center; /* align table data to the center */
+  }
+  
+  #table-container table {
+    border-collapse: collapse; /* remove table borders */
+    border: none; /* remove table borders */
+  }
+  
+  #table-container tr:nth-child(even) {
+    background-color: #f2f2f2; /* alternate row background color */
+  }
+  
+  #table-container tr:nth-child(odd) {
+    background-color: #fff; /* alternate row background color */
+  }
+  
+  #table-container th, #table-container td {
+    border: none; /* remove cell borders */
+    padding: 10px; /* add some padding to cells */
+    text-align: center; /* align cell data to the center */
+  }
 
-#categories-table {
-    width: 50%;
-    float: right;
-}
 
-#categories-tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-#realtime-crawling-container {
-    clear: both;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-}
+  /* Button styles */
+button {
+    padding: 10px 20px; /* add some padding to buttons */
+    border: none; /* remove button borders */
+    border-radius: 5px; /* add a slight curve to button corners */
+    cursor: pointer; /* change cursor shape to a pointing hand */
+    font-size: 16px; /* set button font size */
+    margin: 10px; /* add some margin around buttons */
+  }
+  
+  button:hover {
+    background-color: #ccc; /* change button background color on hover */
+  }
+  
+  button:active {
+    background-color: #aaa; /* change button background color on click */
+  }
+  
+  #header {
+    background-color: #333; /* set header background color */
+    color: #fff; /* set header text color */
+    padding: 20px; /* add some padding to header */
+    text-align: center; /* center header text */
+  }
+  
+  #header button {
+    background-color: #555; /* set button background color */
+    color: #fff; /* set button text color */
+  }
+  
+  #header button:hover {
+    background-color: #666; /* change button background color on hover */
+  }
+  
+  #header button:active {
+    background-color: #777; /* change button background color on click */
+  }
