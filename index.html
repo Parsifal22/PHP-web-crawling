@@ -11,7 +11,7 @@
     <div id="header">
         <h1>Scraping Dashboard</h1>
         <button id="print-all-products-btn">Kuva Põhimõõdikud</button>
-        <button id="print-categories-btn">Kuva Kampaaniad</button>
+        <button id="print-promotions-btn">Kuva Kampaaniad</button>
     </div>
     <div id="results-container">
         <h2>Results</h2>    
@@ -20,10 +20,12 @@
             <div id="category-chart-container"></div>
             <div id="prices-chart-container"></div>
         </div>
-        
+        <div id="temporary-promotion-table-container"></div>
+        <div id="permament-dicount-table-container"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script src="./scripts/scriptProduct.js"></script>
+    <script src="./scripts/scriptPromotion.js"></script>
 </body>
 </html>

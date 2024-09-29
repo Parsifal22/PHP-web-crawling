@@ -32,7 +32,7 @@ if ($_SERVER['PHP_AUTH_USER'] !== $username || !password_verify($_SERVER['PHP_AU
 try {
     // Create a new instance of the Scraper class for each URL
     $scraper = new Scraper();
-    $results = $scraper->extractCategories();
+    $results = $scraper->extractPermanentDiscount();
 } catch (Exception $e) {
     // Handle any errors that occur during scraping
     error_log("Error scraping: " . $e->getMessage());

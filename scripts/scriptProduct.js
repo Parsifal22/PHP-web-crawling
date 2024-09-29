@@ -4,60 +4,41 @@ const categoriesChartContainer = document.getElementById('category-chart-contain
 const pricesChartContainer = document.getElementById('prices-chart-container');
 
 const printAllProductsBtn = document.getElementById('print-all-products-btn');
-const printCategoriesBtn = document.getElementById('print-categories-btn');
 
 printAllProductsBtn.addEventListener('click', getAllProducts);
-printCategoriesBtn.addEventListener('click', getAllCategories);
 
 
-// Set up authentication headers
-const authHeaders = {
-    'Authorization': `Basic ${btoa(`admin:password`)}`,
-    'Content-Type': 'application/json'
-  };
+  // Set up authentication headers
+  const authHeaders = {
+      'Authorization': `Basic ${btoa(`admin:password`)}`,
+      'Content-Type': 'application/json'
+    };
 
 
-function getAllProducts() {
-  fetch(`/api/GetAllProducts.php`, {
-    method: 'POST',
-    headers: authHeaders,
-    body: JSON.stringify({}) // empty object, no search query needed
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (Array.isArray(data)) {
-      printAllProducts(data);
-      printCategories(data);
-      printPriceRanges(data);
-    } else {
-      console.error('API response is not an array:', data);
-    }
-  })
-  .catch(error => console.error('Error:', error));
-}
-
-function getAllCategories() {
-  fetch(`/api/GetAllCategories.php`, {
-    method: 'POST',
-    headers: authHeaders,
-    body: JSON.stringify({}) // empty object, no search query needed
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (Array.isArray(data)) {
-      printCategories(data);
-    } else {
-      console.error('API response is not an array:', data);
-    }
-  })
-  .catch(error => console.error('Error:', error));
-}
+  function getAllProducts() {
+    fetch(`/api/GetAllProducts.php`, {
+      method: 'POST',
+      headers: authHeaders,
+      body: JSON.stringify({}) // empty object, no search query needed
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (Array.isArray(data)) {
+        printAllProducts(data);
+        printCategories(data);
+        printPriceRanges(data);
+      } else {
+        console.error('API response is not an array:', data);
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  }
 
 
   // Define the printAllProducts function
   function printAllProducts(data) {
     console.log(data);
-    productsTableContainer.innerHTML = ''; // Clear the results container
+    clearElements();
     productsTableContainer.innerHTML = `
       <table id="products-table">
         <thead>
@@ -95,8 +76,6 @@ function getAllCategories() {
       }
     });
   
-    
-
     // Sort categories by count in descending order
     const sortedCategories = Object.entries(categories).sort((a, b) => b[1] - a[1]);
   

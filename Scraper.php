@@ -67,7 +67,7 @@ class Scraper {
         return $productsArray;
     }
 
-    public function extractCategories() {
+    public function extractTemporaryPromotions() {
         libxml_use_internal_errors(true);
         $dom = new DOMDocument();
         $dom->loadHTML($this->html);
@@ -79,15 +79,77 @@ class Scraper {
         $productsArray = array();
         
         foreach ($products as $product) {
-            $href = $xpath->query('.//a[@class="cover-link"]', $product)->item(0)->getAttribute('href');
-            $urlParts = explode('/', $href);
-            $categoryName = $urlParts[4];
+
             $title = trim($xpath->query('.//p/a', $product)->item(0)->nodeValue); // Use trim() to remove extra whitespace
         
-            if ($title && $categoryName) {
+            // Get the price and discount price
+            $priceDiv = $xpath->query('.//div[@class="c-price h-price--small"]', $product);
+            $price = trim($priceDiv->item(0)->nodeValue);
+            
+            if ($price == null){
+                continue;
+            }
+
+            $price = str_replace(' €', '', $price); // Remove the euro sign
+            $price = number_format((float) str_replace('.', '', $price) / 100, 2, '.', ''); // Format the price
+
+            $discountPriceDiv = $xpath->query('.//span[@class="price notranslate discount-price"]', $product);
+
+            $discountPrice= trim($discountPriceDiv->item(0)->nodeValue);
+
+            $discountPrice = str_replace(' €', '', $discountPrice); // Remove the euro sign
+            $discountPrice = number_format((float) str_replace('.', '', $discountPrice) / 100, 2, '.', ''); // Format the price
+
+            if ($discountPrice != "0.00" && $price != "0.00") {
                 $productsArray[] = array(
                     'title' => $title,
-                    'category' => $categoryName
+                    'price' => $price,
+                    'discountPrice' => $discountPrice
+                );
+            }
+        }
+
+        return $productsArray;
+    }
+
+    public function extractPermanentDiscount() {
+        libxml_use_internal_errors(true);
+        $dom = new DOMDocument();
+        $dom->loadHTML($this->html);
+        libxml_clear_errors();
+    
+        $xpath = new DOMXPath($dom);
+        $products = $xpath->query('//div[contains(@class, "api product-list-item") and @widget]');
+
+        $productsArray = array();
+        
+        foreach ($products as $product) {
+
+            $title = trim($xpath->query('.//p/a', $product)->item(0)->nodeValue); // Use trim() to remove extra whitespace
+        
+            // Get the price and discount price
+            $priceDiv = $xpath->query('.//span[@class="old-price"]', $product);
+            $price = trim($priceDiv->item(0)->nodeValue);
+            
+            if ($price == null){
+                continue;
+            }
+
+            $price = str_replace(' €', '', $price); // Remove the euro sign
+            $price = number_format((float) str_replace('.', '', $price) / 100, 2, '.', ''); // Format the price
+
+            $discountPriceDiv = $xpath->query('.//span[@class="price notranslate discount-price"]', $product);
+
+            $discountPrice= trim($discountPriceDiv->item(0)->nodeValue);
+
+            $discountPrice = str_replace(' €', '', $discountPrice); // Remove the euro sign
+            $discountPrice = number_format((float) str_replace('.', '', $discountPrice) / 100, 2, '.', ''); // Format the price
+
+            if ($discountPrice != "0.00" && $price != "0.00") {
+                $productsArray[] = array(
+                    'title' => $title,
+                    'price' => $price,
+                    'discountPrice' => $discountPrice
                 );
             }
         }
