@@ -2,28 +2,45 @@ body {
     font-family: Arial, sans-serif;
 }
 
-#results-container {
-    margin-top: 20px;
+#results-container > *{
+    padding-right: 40px;  /* add a 20px margin bottom to each direct child element */
 }
 
-#table-container {
+#products-table-container {
+    width: 40vw; /* 50% of the viewport width */
+    float: left;
+    margin: 0 auto; /* to center the container horizontally */
     text-align: center; /* align table data to the center */
   }
-  
-  #table-container table {
+
+  #charts-container {
+    width: 60vw; 
+    max-width: 600px;
+    float: right;
+    margin: 0 auto;
+    
+    text-align: center;
+  }
+
+  #categoryChart {
+    width: 100%;
+    padding-bottom: 40px;
+  }
+
+  #results-container div table {
     border-collapse: collapse; /* remove table borders */
     border: none; /* remove table borders */
   }
   
-  #table-container tr:nth-child(even) {
+  #results-container div tr:nth-child(even) {
     background-color: #f2f2f2; /* alternate row background color */
   }
   
-  #table-container tr:nth-child(odd) {
+  #results-container div tr:nth-child(odd) {
     background-color: #fff; /* alternate row background color */
   }
   
-  #table-container th, #table-container td {
+  #results-container div th, #table-container td {
     border: none; /* remove cell borders */
     padding: 10px; /* add some padding to cells */
     text-align: center; /* align cell data to the center */
